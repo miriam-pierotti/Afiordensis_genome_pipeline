@@ -8,8 +8,8 @@ ___
 ## General Pipeline Description
 
 ```mermaid
-flowchart
 %%{init: {"flowchart": {"defaultRenderer": "elk"}} }%%
+flowchart TB
     subgraph GENOME ASSEMBLY
         direction TB
         ONTDNA[ONT DNA / Raw Reads] -->|.bam| SAM1(SAMTOOLS)
@@ -21,7 +21,7 @@ flowchart
         DORCOR ---> |Corrected filtered reads| HIFI(HIFIASM)
         DORCOR --> NP2(NANOPLOT)
         DORCOR --> SEQKIT(SEQKIT)
-        CHOP --> |Ultralong reads >10kbp| HIFI(HIFIASM)
+        CHOP1 --> |Ultralong reads >10kbp| HIFI(HIFIASM)
         HIFI --> HIFISTAT(HIFIASM STATS)
         HIFI --> |Assembled contigs| FASTA(((.fasta)))
         FASTA --> PURDUP(PURGEDUPS)
@@ -62,7 +62,7 @@ flowchart
         FQ2 --> DOR2(DORADO)
         DOR2 --> CHOP2(CHOPPER)
         CHOP2 --> MINMAP(MINIMAP)
-        MINMAP <-- RESCAF
+        MINMAP --> RESCAF
         RESCAF --> BAMBU(BAMBU)
         
         subgraph STRUCTURAL ANNOTATION
@@ -87,4 +87,3 @@ The pseudo-chomosomal reference genome assembly is fully documented in [GENOME A
 ### Annotation
 
 The RNA-informed annotation is fully documented in the [ANNOTATION DOCUMENTATION](ANNOTATION.md).
- 
